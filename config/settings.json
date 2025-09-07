@@ -1,5 +1,7 @@
 {
   "KAFKA_HOST": "localhost:9092",
-  "LOADER_PUB_TOPIC": "muezzine_data"
+  "LOADER_PUB_TOPIC": "muezzine_data",
+  "ELASTIC_HOST": "http://localhost:9200",
+  "INDEX_NAME": "muezzine_data"
 
 }
