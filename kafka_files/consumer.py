@@ -17,7 +17,6 @@ class Consumer:
         consumer = KafkaConsumer(
             self.topic,
             bootstrap_servers=KAFKA_HOST,
-            group_id='my-group',
             enable_auto_commit=True,
             value_deserializer=lambda m: json.loads(m.decode('utf-8'))
         )
