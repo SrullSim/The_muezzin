@@ -23,17 +23,27 @@ class Loader:
         return wav_data_list
 
 
-    def get_metadata_on_file(self, file) -> object:
+    def get_metadata_on_file(self, file) -> dict:
+
         try:
-            metadata = os.stat(file)
-            # print(metadata.st_size)
-            data_file = {metadata: metadata}
+            file_path = Path(file)
+            metadata = file_path.stat()
+            filename = Path(file).name
+            fixed_time_stamp = self.convert_to_datetime_type(metadata.st_mtime)
+            data_file = {filename : {
+                "file_name" : filename,
+                "file_size": metadata.st_size,
+                "file_create_time": metadata.st_ctime_ns,
+                "file_modify_time" : metadata.st_mtime,
+            }}
             return data_file
         except FileNotFoundError:
             print(f"Error: File not found at {file}")
+            return {"Error: File not found at" : file}
 
 
-    def read_metadata(self):
+    def collect_metadata(self):
+        """ get dict of metadata for each file in the directory """
         wav_files = self.read_files_to_list(self.path_to_data_dir)
         data_to_publish = []
         for file in wav_files:
@@ -43,9 +53,13 @@ class Loader:
         return data_to_publish
 
 
+    def convert_to_datetime_type(self, st_mtime ):
+        last_modified_dt = datetime.datetime.fromtimestamp(st_mtime)
+        return last_modified_dt
 
 
 
-l = Loader()
-d =l.read_metadata()
-print(d)
+if __name__ == "__main__":
+    l = Loader()
+    d =l.collect_metadata()
+    print(d)
