@@ -1,5 +1,5 @@
-from elastic_connection import ElasticConnection
-from mapping import MAPPING
+from src.elasticsearch_files.elastic_connection import ElasticConnection
+from src.elasticsearch_files.mapping import MAPPING
 
 
 class IndexInit:

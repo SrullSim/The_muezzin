@@ -3,7 +3,6 @@ import struct
 from config.config import PROJECT_ROOT,DATA_DIR
 from pathlib import Path
 import os
-import uuid
 
 
 
@@ -30,12 +29,14 @@ class Loader:
             file_path = Path(file)
             metadata = file_path.stat()
             filename = Path(file).name
-            fixed_time_stamp = self.convert_to_datetime_type(metadata.st_mtime)
+            mod_time = self.convert_to_datetime_type(metadata.st_mtime)
+
             data_file = {filename : {
                 "file_name" : filename,
-                "file_size": metadata.st_size,
+                "unique_id": self.file_uid_from_metadata(metadata),
+                "file_size_in_byts": metadata.st_size,
                 "file_create_time": metadata.st_ctime_ns,
-                "file_modify_time" : metadata.st_mtime,
+                "file_modify_time" : mod_time,
             }}
             return data_file
         except FileNotFoundError:
@@ -49,16 +50,21 @@ class Loader:
         data_to_publish = []
         for file in wav_files:
             dict_metadata = self.get_metadata_on_file(file)
-            dict_metadata["unique_id"] = str(uuid.uuid4())
             data_to_publish.append(dict_metadata)
 
         return data_to_publish
 
 
     def convert_to_datetime_type(self, st_mtime ):
-        last_modified_dt = datetime.datetime.fromtimestamp(st_mtime)
-        return last_modified_dt
+        mod_time = datetime.datetime.fromtimestamp(st_mtime).strftime("%Y%m%d%H%M%S")
+        return mod_time
 
+
+
+    def file_uid_from_metadata(self, metadata):
+        mod_time = datetime.datetime.fromtimestamp(metadata.st_mtime).strftime("%Y%m%d%H%M%S")
+        file_size = metadata.st_size
+        return f"{mod_time}_{file_size}"
 
 
 if __name__ == "__main__":

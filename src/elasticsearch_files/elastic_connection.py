@@ -1,6 +1,6 @@
 import time
 from config.config import ELASTIC_HOST
-from mapping import MAPPING
+from src.elasticsearch_files.mapping import MAPPING
 from pprint import pprint
 from elasticsearch import Elasticsearch
 

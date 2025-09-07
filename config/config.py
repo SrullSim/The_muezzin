@@ -22,3 +22,4 @@ ELASTIC_HOST = settings.get("ELASTIC_HOST",  "http://localhost:9200")
 
 LOADER_PUB_TOPIC = settings.get("LOADER_PUB_TOPIC", "muezzine_data")
 
+INDEX_NAME = settings.get("INDEX_NAME", "muezzine_data")
