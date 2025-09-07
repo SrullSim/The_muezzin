@@ -1,0 +1,19 @@
+import json
+from pathlib import Path
+
+
+PROJECT_ROOT = Path(__file__).parent.parent
+DATA_DIR = PROJECT_ROOT / "data"
+CONFIG_DIR = PROJECT_ROOT / "config"
+
+
+
+SETTINGS_FILE_PATH = CONFIG_DIR / "settings.json"
+try:
+    with open(SETTINGS_FILE_PATH, 'r') as f:
+        settings = json.load(f)
+except FileNotFoundError:
+    settings = {}
+    print(f"WARNING: Configuration file not found at {SETTINGS_FILE_PATH}. Using defaults.")
+
+KAFKA_HOST = settings.get("KAFKA_HOST", 'localhost:9092')
