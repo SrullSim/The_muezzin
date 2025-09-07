@@ -17,5 +17,8 @@ except FileNotFoundError:
     print(f"WARNING: Configuration file not found at {SETTINGS_FILE_PATH}. Using defaults.")
 
 KAFKA_HOST = settings.get("KAFKA_HOST", 'localhost:9092')
+ELASTIC_HOST = settings.get("ELASTIC_HOST",  "http://localhost:9200")
+
 
 LOADER_PUB_TOPIC = settings.get("LOADER_PUB_TOPIC", "muezzine_data")
+

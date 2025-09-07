@@ -223,6 +223,8 @@ Desktop.ini
 
 # Configuration files with sensitive data
 config.ini
+config
+
 secrets.json
 .secrets
 

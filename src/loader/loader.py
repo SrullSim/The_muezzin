@@ -3,6 +3,7 @@ import struct
 from config.config import PROJECT_ROOT,DATA_DIR
 from pathlib import Path
 import os
+import uuid
 
 
 
@@ -48,6 +49,7 @@ class Loader:
         data_to_publish = []
         for file in wav_files:
             dict_metadata = self.get_metadata_on_file(file)
+            dict_metadata["unique_id"] = str(uuid.uuid4())
             data_to_publish.append(dict_metadata)
 
         return data_to_publish
