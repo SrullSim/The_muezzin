@@ -1,5 +1,5 @@
 {
   "KAFKA_HOST": "localhost:9092",
-  "": ""
+  "LOADER_PUB_TOPIC": "muezzine_data"
 
 }
