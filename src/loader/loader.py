@@ -27,7 +27,7 @@ class Loader:
         try:
             metadata = os.stat(file)
             # print(metadata.st_size)
-            data_file = {file: metadata}
+            data_file = {metadata: metadata}
             return data_file
         except FileNotFoundError:
             print(f"Error: File not found at {file}")
