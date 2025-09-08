@@ -6,6 +6,7 @@ from elasticsearch import helpers
 from elasticsearch.helpers import bulk
 from src.elasticsearch_files.elastic_connection import ElasticConnection
 from src.elasticsearch_files.mapping import MAPPING
+from logger.logger import Logger
 
 
 class ElasticCRUD:
@@ -13,6 +14,7 @@ class ElasticCRUD:
     def __init__(self, index_name):
         self.es = ElasticConnection().es
         self.index_name = index_name
+        self.logger = Logger.get_logger()
 
 
     def insert_one_document(self, data):
@@ -21,9 +23,11 @@ class ElasticCRUD:
         :return: """
         try:
             res = self.es.index(index=self.index_name, document=data)
+            self.logger.info("document insert successful")
             return res
         except Exception as e:
-            print(f"Failed to insert data: {e}")
+            self.logger.error(f"Failed to insert data: {e}")
+
 
 
 
@@ -42,9 +46,12 @@ class ElasticCRUD:
             ]
             res = bulk(self.es, actions= actions, index=self.index_name)
             pprint(f"Bulk inserted successfully. Inserted {res[0]} documents.")
+            self.logger.info("documents insert successful")
+
 
         except Exception as e:
-            print(f"Failed to insert data: {e}")
+            self.logger.error(f"Failed to insert data: {e}")
+
 
 
 
@@ -54,6 +61,8 @@ class ElasticCRUD:
         :return: obj """
         try:
             res = self.es.search(index=self.index_name, body=query)
+            self.logger.info("document found successful")
+
             return res
         except Exception as e:
-            print(f"Failed to search data: {e}")
+            self.logger.error(f"Failed to search data: {e}")

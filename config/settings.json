@@ -1,6 +1,9 @@
 {
   "TIMESTAMP" : 1678886400,
 
+  "LOGGER_NAME": "muazin_logeer",
+  "LOGGER_INDEX_NAME":  "muazin_logs",
+
   "KAFKA_HOST": "localhost:9092",
   "LOADER_PUB_TOPIC": "muezzine_data",
   "ELASTIC_HOST": "http://localhost:9200",

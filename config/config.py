@@ -24,6 +24,8 @@ LOADER_PUB_TOPIC = settings.get("LOADER_PUB_TOPIC", "muezzine_data")
 
 INDEX_NAME = settings.get("INDEX_NAME", "muezzine_data")
 TIMESTAMP = settings.get("TIMESTAMP", 1678886400)
+LOGGER_NAME = settings.get("LOGGER_NAME",  "muazin_logeer")
+LOGGER_INDEX_NAME = settings.get("LOGGER_INDEX_NAME",  "muazin_logs")
 
 MONGO_HOST = settings.get("MONGO_HOST","mongodb://localhost:27017")
 DB_NAME = settings.get("DB_NAME", "podcasts_details")
