@@ -12,8 +12,7 @@ class ElasticDAL:
         self.es = ElasticConnection().es
 
 
-    def get_all_data(self):
-            return self.crud.search_data({"query":{"match_all":{}}})
+
 
 
     def insert_one_document(self, document):
@@ -23,3 +22,10 @@ class ElasticDAL:
     def insert_bulk(self,data: list[dict]):
         return self.crud.insert_data_bulk(data)
 
+
+    def get_all_data(self):
+            return self.crud.search_data({"query":{"match_all":{}}})
+
+
+    def get_doc_by_id(self, query):
+        return self.crud.search_data(query)
