@@ -21,7 +21,6 @@ class ElasticCRUD:
         :return: """
         try:
             res = self.es.index(index=self.index_name, document=data)
-            print("Data inserted successfully.")
             return res
         except Exception as e:
             print(f"Failed to insert data: {e}")

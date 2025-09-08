@@ -1,7 +1,15 @@
 {
+  "TIMESTAMP" : 1678886400,
+
   "KAFKA_HOST": "localhost:9092",
   "LOADER_PUB_TOPIC": "muezzine_data",
   "ELASTIC_HOST": "http://localhost:9200",
-  "INDEX_NAME": "muezzine_data"
+  "INDEX_NAME": "muezzine_data",
+
+
+
+  "MONGO_HOST": "mongodb://localhost:27017",
+  "DB_NAME": "podcasts_details",
+  "COLLECTION_NAME" : "metadata"
 
 }

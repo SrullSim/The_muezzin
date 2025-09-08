@@ -17,7 +17,10 @@ class GetData:
         try:
             for document in self.events:
                 print(document.value)
+
+                # send to index of Elasticsearch
                 self.elastic_dal.insert_one_document(document.value)
+
 
 
         #         process and mapping

@@ -1,6 +1,7 @@
 import datetime
-import struct
-from config.config import PROJECT_ROOT,DATA_DIR
+from datetime import datetime, timezone
+from config.config import PROJECT_ROOT,DATA_DIR, TIMESTAMP
+
 from pathlib import Path
 import os
 
@@ -24,11 +25,13 @@ class Loader:
 
 
     def get_metadata_on_file(self, file) -> dict:
-
+        """ build the dict for sending over """
         try:
             file_path = Path(file)
             metadata = file_path.stat()
             filename = Path(file).name
+
+            c_time = self.timestamp_to_datetime(metadata.st_ctime_ns)
             mod_time = self.convert_to_datetime_type(metadata.st_mtime)
 
             data_file = {filename : {
@@ -56,18 +59,25 @@ class Loader:
 
 
     def convert_to_datetime_type(self, st_mtime ):
-        mod_time = datetime.datetime.fromtimestamp(st_mtime).strftime("%Y%m%d%H%M%S")
+        mod_time = datetime.fromtimestamp(st_mtime).strftime("%Y%m%d%H%M%S")
         return mod_time
 
+    def timestamp_to_datetime(self,ts):
+        """ convert type to datetime """
+        return datetime.fromtimestamp(TIMESTAMP, tz=timezone.utc)
 
 
     def file_uid_from_metadata(self, metadata):
-        mod_time = datetime.datetime.fromtimestamp(metadata.st_mtime).strftime("%Y%m%d%H%M%S")
+        mod_time = datetime.fromtimestamp(metadata.st_mtime).strftime("%Y%m%d%H%M%S")
         file_size = metadata.st_size
         return f"{mod_time}_{file_size}"
 
 
 if __name__ == "__main__":
     l = Loader()
-    d =l.collect_metadata()
-    print(d)
+    # d =l.collect_metadata()
+    # print(d)
+    # l.file_uid_from_metadata()
+    dt = l.timestamp_to_datetime(1757255529987)
+    print(dt.isoformat())
+    print(l.timestamp_to_datetime(dt))
