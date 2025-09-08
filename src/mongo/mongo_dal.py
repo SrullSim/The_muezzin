@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import gridfs
 from config.config import MONGO_HOST
 from src.mongo.mongo_crud import MongoCRUD
+from logger.logger import Logger
 
 
 class MongoDal:
@@ -13,15 +14,18 @@ class MongoDal:
         self.uri = MONGO_HOST
         self.mongo_crud = MongoCRUD(db_name, collection)
         self.client = None
+        self.logger = Logger.get_logger()
 
 
     def insert_one(self, document):
         try:
             self.mongo_crud.open_connection()
             result = self.mongo_crud.insert_one(document)
+            self.logger.info("insert one document")
             return result
         except Exception as e:
-            print("error to insert mongodal :", e)
+            self.logger.error("error to insert mongodal :", e)
+
             return {"error :": e }
         finally:
             self.mongo_crud.close_connection()
@@ -31,9 +35,10 @@ class MongoDal:
         try:
             self.mongo_crud.open_connection()
             result = self.mongo_crud.insert_many(documents)
+            self.logger.info("insert all documents")
             return result
         except Exception as e :
-            print("error to insert mongodal :", e)
+            self.logger.error("error to insert mongodal :", e)
             return {"error :": e}
         finally:
             self.mongo_crud.close_connection()
@@ -43,9 +48,10 @@ class MongoDal:
         try:
             self.mongo_crud.open_connection()
             result = self.mongo_crud.get_all()
+            self.logger.info("get all data successfully")
             return result
         except Exception as e:
-            print("error to get MongoDB :", e)
+            self.logger.error("error to get MongoDB :", e)
             return {"error :": e}
         finally:
             self.mongo_crud.close_connection()
@@ -55,9 +61,10 @@ class MongoDal:
         try:
             self.mongo_crud.open_connection()
             result = self.mongo_crud.get_doc_by_id(doc_id)
+            self.logger.info("get the doc by id successfully")
             return result
         except Exception as e:
-            print("error to get MongoDB :", e)
+            self.logger.error("error to get MongoDB :", e)
             return {"error :": e}
         finally:
             self.mongo_crud.close_connection()
@@ -67,9 +74,10 @@ class MongoDal:
         try:
             self.mongo_crud.open_connection()
             result = self.mongo_crud.delete_one(doc_id)
+            self.logger.info("data deleted successfully")
             return result
         except Exception as e:
-            print("error to delete MongoDB :", e)
+            self.logger.error("error to update MongoDB :", e)
             return {"error :": e}
         finally:
             self.mongo_crud.close_connection()
@@ -79,24 +87,30 @@ class MongoDal:
         try:
             self.mongo_crud.open_connection()
             result = self.mongo_crud.update_one(doc_id, field, new_value)
+            self.logger.info("update data successfully")
             return result
         except Exception as e:
-            print("error to update MongoDB :", e)
+            self.logger.error("error to update MongoDB :", e)
+
             return {"error :": e}
         finally:
             self.mongo_crud.close_connection()
 
 
     def read_file_content(self,  path_to_file):
+        """ read the content of a file
+        param: path to the current file
+        return: id  """
         try:
             self.mongo_crud.open_connection()
             fs = GridFS(self.mongo_crud.client[self.db_name])
             with open(path_to_file, 'rb') as audio_file:
                 file_id = fs.put(audio_file)
-
+            self.logger.info("read file with GridFS successfully")
             return file_id
         except Exception as e:
-            print("error to read file :", e)
+            self.logger.error("read file failed because: ", e)
+
 
 
 
