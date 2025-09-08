@@ -1,7 +1,9 @@
 import datetime
 from datetime import datetime, timezone
+import numpy as np
+import gridfs
 from config.config import PROJECT_ROOT,DATA_DIR, TIMESTAMP
-
+import struct
 from pathlib import Path
 import os
 
@@ -34,11 +36,13 @@ class Loader:
             c_time = self.timestamp_to_datetime(metadata.st_ctime_ns)
             mod_time = self.convert_to_datetime_type(metadata.st_mtime)
 
-            data_file = {filename : {
+
+            data_file = {'file_details' : {
                 "file_name" : filename,
+                "file_path": file,
                 "unique_id": self.file_uid_from_metadata(metadata),
-                "file_size_in_byts": metadata.st_size,
-                "file_create_time": metadata.st_ctime_ns,
+                "file_size_in_byts": mod_time,
+                "file_create_time": c_time,
                 "file_modify_time" : mod_time,
             }}
             return data_file
@@ -47,11 +51,12 @@ class Loader:
             return {"Error: File not found at" : file}
 
 
-    def collect_metadata(self):
+    def collect_metadata(self) -> list:
         """ get dict of metadata for each file in the directory """
         wav_files = self.read_files_to_list(self.path_to_data_dir)
         data_to_publish = []
         for file in wav_files:
+
             dict_metadata = self.get_metadata_on_file(file)
             data_to_publish.append(dict_metadata)
 
@@ -59,25 +64,27 @@ class Loader:
 
 
     def convert_to_datetime_type(self, st_mtime ):
-        mod_time = datetime.fromtimestamp(st_mtime).strftime("%Y%m%d%H%M%S")
+        """ convert type to datetime """
+        mod_time = datetime.fromtimestamp(st_mtime).strftime("%Y-%m-%d %H:%M:%S")
         return mod_time
 
-    def timestamp_to_datetime(self,ts):
+
+    def timestamp_to_datetime(self,timestamp):
         """ convert type to datetime """
-        return datetime.fromtimestamp(TIMESTAMP, tz=timezone.utc)
+        return datetime.fromtimestamp(TIMESTAMP, tz=timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
 
 
     def file_uid_from_metadata(self, metadata):
+        """ create unique id """
         mod_time = datetime.fromtimestamp(metadata.st_mtime).strftime("%Y%m%d%H%M%S")
         file_size = metadata.st_size
         return f"{mod_time}_{file_size}"
 
 
 if __name__ == "__main__":
-    l = Loader()
+    # l = Loader()
     # d =l.collect_metadata()
     # print(d)
-    # l.file_uid_from_metadata()
-    dt = l.timestamp_to_datetime(1757255529987)
-    print(dt.isoformat())
-    print(l.timestamp_to_datetime(dt))
+    # # l.file_uid_from_metadata()
+    # l.timestamp_to_datetime(d)
+    pass

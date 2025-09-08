@@ -1,6 +1,8 @@
+from gridfs import GridFS
 from pymongo import MongoClient
+import gridfs
 from config.config import MONGO_HOST
-from mongo_crud import MongoCRUD
+from src.mongo.mongo_crud import MongoCRUD
 
 
 class MongoDal:
@@ -85,15 +87,19 @@ class MongoDal:
             self.mongo_crud.close_connection()
 
 
+    def read_file_content(self,  path_to_file):
+        try:
+            self.mongo_crud.open_connection()
+            fs = GridFS(self.mongo_crud.client[self.db_name])
+            with open(path_to_file, 'rb') as audio_file:
+                file_id = fs.put(audio_file)
+
+            return file_id
+        except Exception as e:
+            print("error to read file :", e)
+
+
 
 if __name__ == "__main__":
     # for testing
-    # from config.config import DB_NAME, COLLECTION_NAME
-    # d = MongoDal(DB_NAME,COLLECTION_NAME)
-    # data = {'download (9).wav': {'file_name': 'download (9).wav', 'unique_id': '20250907104952_1672890', 'file_size_in_byts': 1672890, 'file_create_time': 315522000000000000, 'file_modify_time': '20250907104952'}}
-    #
-    # res = d.insert_one(data)
-    # print(res)
-    # get = d.get_doc_by_id('68be86f922aae32eb47e5ed2')
-    # print(get)
     pass
