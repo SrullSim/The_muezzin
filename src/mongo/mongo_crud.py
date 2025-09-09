@@ -1,7 +1,8 @@
 from datetime import datetime, date
 from bson import ObjectId
 from pymongo import MongoClient
-from config.config import MONGO_HOST
+from config.config import MONGO_HOST,GRIDFS_CHUNKS_COLLECTION
+from gridfs import GridFS
 
 
 
@@ -77,6 +78,31 @@ class MongoCRUD:
              # Find the document by _id, exclude _id from result
                 document = collection.find_one({"_id": doc_id})
                 return document
+            except Exception as e:
+                print(f"Error retrieving document: {e}")
+                return None
+        return None
+
+
+    def get_doc_by_id_from_gridFS(self, id_to_search):
+        """ Get a document from MongoDB by its _id
+                Args: doc_id (str): The document ID to retrieve
+                Returns: dict: The document if found, None if not found """
+        if self.client:
+            try:
+                db = self.client[self.db_name]
+                collection = db[GRIDFS_CHUNKS_COLLECTION]
+
+                # Convert string to ObjectId if needed
+                if isinstance(id_to_search, str):
+                    id_to_search = ObjectId(id_to_search)
+                fs = GridFS(db)
+
+                # Find the document by _id, exclude _id from result
+                document = fs.get(id_to_search)
+                remaining_data = document.read()
+
+                return remaining_data
             except Exception as e:
                 print(f"Error retrieving document: {e}")
                 return None

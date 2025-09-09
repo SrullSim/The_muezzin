@@ -97,7 +97,7 @@ class MongoDal:
             self.mongo_crud.close_connection()
 
 
-    def read_file_content(self,  path_to_file):
+    def load_data_to_mongo_with_GridFS(self, path_to_file):
         """ read the content of a file
         param: path to the current file
         return: id  """
@@ -105,13 +105,29 @@ class MongoDal:
             self.mongo_crud.open_connection()
             fs = GridFS(self.mongo_crud.client[self.db_name])
             with open(path_to_file, 'rb') as audio_file:
+
                 file_id = fs.put(audio_file)
-            self.logger.info("read file with GridFS successfully")
+            self.logger.info("load file with GridFS successfully")
             return file_id
         except Exception as e:
             self.logger.error("read file failed because: ", e)
 
 
+    def get_doc_by_id_from_gridFS(self, id_to_search):
+        try:
+            self.mongo_crud.open_connection()
+            result = self.mongo_crud.get_doc_by_id_from_gridFS(id_to_search)
+            self.logger.info("get the doc by id from GridFS was successfully")
+            if result:
+                return result
+            else:
+                print("get_doc_by_id_from_gridFS failed ")
+                self.logger.info("get_doc_by_id_from_gridFS failed ")
+        except Exception as e:
+            self.logger.error("error to get MongoDB :", e)
+            return {"error :": e}
+        finally:
+            self.mongo_crud.close_connection()
 
 
 if __name__ == "__main__":

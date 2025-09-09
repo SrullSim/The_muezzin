@@ -14,6 +14,9 @@
   "MONGO_HOST": "mongodb://localhost:27017",
   "DB_NAME": "podcasts_details",
   "COLLECTION_NAME" : "metadata",
-  "KEY_TO_MONGO" : "content_file"
+  "COLLECTION_NAME_testing" : "fs.chunks",
+  "KEY_TO_MONGO" : "content_file",
+  "GRIDFS_CHUNKS_COLLECTION" : "fs.chunks"
+
 
 }

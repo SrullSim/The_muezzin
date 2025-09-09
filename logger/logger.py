@@ -20,7 +20,6 @@ class Logger:
                     try:
                         es.index(index=index, document={
                         "timestamp": datetime.utcnow().isoformat(),
-
                         "level": record.levelname,
                         "logger": record.name,
                         "message": record.getMessage()
