@@ -31,5 +31,6 @@ MONGO_HOST = settings.get("MONGO_HOST","mongodb://localhost:27017")
 DB_NAME = settings.get("DB_NAME", "podcasts_details")
 COLLECTION_NAME = settings.get("COLLECTION_NAME" , "metadata")
 COLLECTION_NAME_testing = settings.get("COLLECTION_NAME_testing" , "fs.chunks")
+GRIDFS_CHUNKS_COLLECTION =settings.get("GRIDFS_CHUNKS_COLLECTION" , "fs.chunks")
 
 KEY_TO_MONGO = settings.get("KEY_TO_MONGO" , "content_file")

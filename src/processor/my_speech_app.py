@@ -5,8 +5,7 @@ from logger.logger import Logger
 
 class Stt:
 
-    def __init__(self, file_to_transcribe):
-        self.file_to_transcribe = file_to_transcribe
+    def __init__(self):
         self.logger = Logger.get_logger()
         self.recognizer = sr.Recognizer()
 
@@ -22,10 +21,11 @@ class Stt:
             try:
                 text = self.recognizer.recognize_google(audio_data=audio)
                 self.logger.info("stt successfully")
-                print("text",text)
-                return audio
+                return text
+
             except sr.UnknownValueError:
                 self.logger.error("Google Speech Recognition could not understand audio")
+
             except sr.RequestError as e:
                 self.logger.error(f"Could not request results from Google Speech Recognition service; {e}")
 

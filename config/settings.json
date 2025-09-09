@@ -15,6 +15,8 @@
   "DB_NAME": "podcasts_details",
   "COLLECTION_NAME" : "metadata",
   "COLLECTION_NAME_testing" : "fs.chunks",
-  "KEY_TO_MONGO" : "content_file"
+  "KEY_TO_MONGO" : "content_file",
+  "GRIDFS_CHUNKS_COLLECTION" : "fs.chunks"
+
 
 }
