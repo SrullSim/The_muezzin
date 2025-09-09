@@ -29,12 +29,13 @@ class ControllerProcessData:
                 #  split the data
                 list_of_div_data = self.div_the_data(data_to_send)
 
-                # send to index of Elasticsearch
+
                 data_to_elastic = list_of_div_data[0]
                 data_to_mongodb = list_of_div_data[1]
 
+                # send to mongodb
                 self.mongo_dal.insert_one(data_to_mongodb)
-
+                # send to index of Elasticsearch
                 self.elastic_dal.insert_one_document(data_to_elastic)
 
             self.logger.info("event finished. goodby")
@@ -47,9 +48,10 @@ class ControllerProcessData:
             # push to mongodb by GridFS lib and get the id given
             file_id = self.mongo_dal.load_data_to_mongo_with_GridFS(document['file_details']['file_path'])
 
+            # extract the content in text
             text = self.file_transcribe(file_id)
 
-
+            # build the dict to send to elastic index
             data_to_elastic = {'file_name': document['file_details']['file_name'],
                                'file_path': document['file_details']['file_path'],
                                'unique_id': document['file_details']['unique_id'],
@@ -66,9 +68,9 @@ class ControllerProcessData:
             return None
 
     def file_transcribe(self, id_of_doc):
+        """ :return content file from byts to text """
         document = self.mongo_dal.get_doc_by_id_from_gridFS(id_of_doc)
-
-        return self.stt.convert_file(document)
+        return self.stt.transcribe_content_from_binary_to_text(document)
 
 
 
@@ -76,9 +78,9 @@ class ControllerProcessData:
 
 
 if __name__ == "__main__":
-    from config.config import LOADER_PUB_TOPIC, INDEX_NAME
-    #
-    get = ControllerProcessData(LOADER_PUB_TOPIC, INDEX_NAME)
-    get.collect_the_data()
+    # from config.config import LOADER_PUB_TOPIC, INDEX_NAME
+    # #
+    # get = ControllerProcessData(LOADER_PUB_TOPIC, INDEX_NAME)
+    # get.collect_the_data()
     pass
 

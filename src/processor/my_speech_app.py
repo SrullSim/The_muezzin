@@ -10,17 +10,20 @@ class Stt:
         self.recognizer = sr.Recognizer()
 
 
-    def convert_file(self, file_to_transcribe):
+    def transcribe_content_from_binary_to_text(self, file_to_transcribe):
+        """ convert the content from byts to text
+            using speech_recognition library """
 
         audio_bytes = file_to_transcribe
 
+        # read the content from binary
         with sr.AudioFile(io.BytesIO(audio_bytes)) as source:
             audio = self.recognizer.record(source)
 
-            print("audio", audio)
             try:
+                # send to google for transcribe
                 text = self.recognizer.recognize_google(audio_data=audio)
-                self.logger.info("stt successfully")
+                self.logger.info("stt transcribe - successfully")
                 return text
 
             except sr.UnknownValueError:
