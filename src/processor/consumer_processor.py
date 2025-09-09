@@ -42,7 +42,8 @@ class ControllerProcessData:
                                'unique_id': document['file_details']['unique_id'],
                                'file_size_in_byts': document['file_details']['file_size_in_byts'],
                                'file_create_time': document['file_details']['file_create_time'],
-                               'file_modify_time': document['file_details']['file_modify_time']
+                               'file_modify_time': document['file_details']['file_modify_time'],
+                               'content_file': ""
                                }
             content_file = self.mongo_dal.read_file_content(document['file_details']['file_path'])
             data_to_mongodb = {'_id':content_file}
