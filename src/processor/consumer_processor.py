@@ -37,7 +37,7 @@ class ControllerProcessData:
 
                 self.elastic_dal.insert_one_document(data_to_elastic)
 
-
+            self.logger.info("event finished. goodby")
         except Exception as e :
             print("error: cant consume data: ", e)
 
@@ -48,7 +48,7 @@ class ControllerProcessData:
             file_id = self.mongo_dal.load_data_to_mongo_with_GridFS(document['file_details']['file_path'])
 
             text = self.file_transcribe(file_id)
-            print("here", type(file_id))
+
 
             data_to_elastic = {'file_name': document['file_details']['file_name'],
                                'file_path': document['file_details']['file_path'],
@@ -67,7 +67,6 @@ class ControllerProcessData:
 
     def file_transcribe(self, id_of_doc):
         document = self.mongo_dal.get_doc_by_id_from_gridFS(id_of_doc)
-
 
         return self.stt.convert_file(document)
 
