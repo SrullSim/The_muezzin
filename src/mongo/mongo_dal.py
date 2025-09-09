@@ -117,8 +117,12 @@ class MongoDal:
         try:
             self.mongo_crud.open_connection()
             result = self.mongo_crud.get_doc_by_id_from_gridFS(id_to_search)
-            self.logger.info("get the doc by id successfully")
-            return result
+            self.logger.info("get the doc by id from GridFS was successfully")
+            if result:
+                return result
+            else:
+                print("get_doc_by_id_from_gridFS failed ")
+                self.logger.info("get_doc_by_id_from_gridFS failed ")
         except Exception as e:
             self.logger.error("error to get MongoDB :", e)
             return {"error :": e}

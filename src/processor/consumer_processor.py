@@ -26,7 +26,6 @@ class ControllerProcessData:
 
                 # extract the data from the event
                 data_to_send = document.value
-
                 #  split the data
                 list_of_div_data = self.div_the_data(data_to_send)
 
@@ -45,10 +44,11 @@ class ControllerProcessData:
 
     def div_the_data(self, document):
         if document:
-
+            # push to mongodb by GridFS lib and get the id given
             file_id = self.mongo_dal.load_data_to_mongo_with_GridFS(document['file_details']['file_path'])
 
             text = self.file_transcribe(file_id)
+            print("here", type(file_id))
 
             data_to_elastic = {'file_name': document['file_details']['file_name'],
                                'file_path': document['file_details']['file_path'],
@@ -66,9 +66,10 @@ class ControllerProcessData:
             return None
 
     def file_transcribe(self, id_of_doc):
-        file = self.mongo_dal.get_doc_by_id_from_gridFS(id_of_doc)
-        data = file['data']
-        return self.stt.convert_file(data)
+        document = self.mongo_dal.get_doc_by_id_from_gridFS(id_of_doc)
+
+
+        return self.stt.convert_file(document)
 
 
 

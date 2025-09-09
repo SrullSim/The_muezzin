@@ -2,6 +2,7 @@ from datetime import datetime, date
 from bson import ObjectId
 from pymongo import MongoClient
 from config.config import MONGO_HOST,GRIDFS_CHUNKS_COLLECTION
+from gridfs import GridFS
 
 
 
@@ -95,10 +96,13 @@ class MongoCRUD:
                 # Convert string to ObjectId if needed
                 if isinstance(id_to_search, str):
                     id_to_search = ObjectId(id_to_search)
+                fs = GridFS(db)
 
                 # Find the document by _id, exclude _id from result
-                document = collection.find_one({"_id": id_to_search})
-                return document
+                document = fs.get(id_to_search)
+                remaining_data = document.read()
+
+                return remaining_data
             except Exception as e:
                 print(f"Error retrieving document: {e}")
                 return None
