@@ -37,7 +37,7 @@ class ManagerAnalysis:
 
         rate_vdw = self.analyser.danger_rate(text_to_check, self.analyser.very_dangerous_words)
 
-        calc_rate = rate_dangerous_word + (rate_vdw*2)
+        calc_rate = rate_dangerous_word + (rate_vdw * 2 )
 
         return calc_rate
 

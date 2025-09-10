@@ -56,7 +56,7 @@ if __name__ == "__main__":
                                PATH_TO_VERY_DANGEROUS_WORDS_FILE,PATH_TO_DANGEROUS_WORDS_FILE)
     #
     get = ControllerProcessData(LOADER_PUB_TOPIC, INDEX_NAME,KEY_TO_DECRYPT_WORDS,
-                                PATH_TO_VERY_DANGEROUS_WORDS_FILE,PATH_TO_DANGEROUS_WORDS_FILE)
+                                PATH_TO_DANGEROUS_WORDS_FILE,PATH_TO_VERY_DANGEROUS_WORDS_FILE)
     get.main_process()
     pass
 

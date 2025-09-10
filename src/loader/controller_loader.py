@@ -30,3 +30,4 @@ if __name__ == "__main__":
     c = ControlLoader()
     print(c.send_all_files_to_kafka())
     pass
+
