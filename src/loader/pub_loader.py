@@ -1,6 +1,4 @@
-import json
 from datetime import datetime, date
-
 from kafka_files.producer import Producer
 from loader import Loader
 
@@ -51,10 +49,5 @@ class PublishLoaderData:
 
 
 if __name__ == "__main__":
-    # for testing
-    # from config.config import LOADER_PUB_TOPIC
-    #
-    # p = PublishLoaderData(LOADER_PUB_TOPIC)
-    # l = Loader()
-    # print(p.publish_massage(l.collect_metadata()))
+
     pass

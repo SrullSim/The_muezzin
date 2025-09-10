@@ -1,9 +1,6 @@
 import datetime
 from datetime import datetime, timezone
-import numpy as np
-import gridfs
 from config.config import PROJECT_ROOT,DATA_DIR, TIMESTAMP
-import struct
 from pathlib import Path
 import os
 
@@ -82,9 +79,4 @@ class Loader:
 
 
 if __name__ == "__main__":
-    # l = Loader()
-    # d =l.collect_metadata()
-    # print(d)
-    # # l.file_uid_from_metadata()
-    # l.timestamp_to_datetime(d)
     pass

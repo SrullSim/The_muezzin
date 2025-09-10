@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY ./config .
+COPY ./logger .
+COPY ./src .
+COPY ./kafka_files .
+
+
+ENV ES_HOST_NAME="es"
+ENV LOGGER_ES_HOST="http://es:9200"
+
+CMD ["python", "src.main:src.main"]

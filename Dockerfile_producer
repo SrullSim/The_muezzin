@@ -1,0 +1,26 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+RUN apt-get update && apt-get install -y \
+    gcc curl ca-certificates \
+    && update-ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+
+COPY ./src/loader .
+COPY ./kafka_files .
+COPY ./logger .
+COPY ./config .
+COPY ./data .
+
+ENV  KAFKA_SERVER_URI="broker:9092"
+ENV LOGGER_ES_HOST="http://es:9200"
+ENV SOURCE_FOLDER_PATH="./data"
+
+
+EXPOSE 9092:9092
+
+CMD ["python" ,"src.loader.main:app"]

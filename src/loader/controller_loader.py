@@ -25,9 +25,9 @@ class ControlLoader:
 
 
 if __name__ == "__main__":
-    # for testing
-    from config.config import LOADER_PUB_TOPIC
-    c = ControlLoader()
-    print(c.send_all_files_to_kafka())
+    # # for testing
+    # from config.config import LOADER_PUB_TOPIC
+    # c = ControlLoader()
+    # print(c.send_all_files_to_kafka())
     pass
 
