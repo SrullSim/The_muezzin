@@ -34,3 +34,4 @@ COLLECTION_NAME_testing = settings.get("COLLECTION_NAME_testing" , "fs.chunks")
 GRIDFS_CHUNKS_COLLECTION =settings.get("GRIDFS_CHUNKS_COLLECTION" , "fs.chunks")
 
 KEY_TO_MONGO = settings.get("KEY_TO_MONGO" , "content_file")
+KEY_TO_DECRYPT_WORDS =settings.get( "KEY_TO_DECRYPT_WORDS", "WORDS")

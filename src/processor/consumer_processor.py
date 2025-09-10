@@ -19,7 +19,7 @@ class ControllerProcessData:
 
 
 
-    def collect_the_data(self):
+    def main_process(self):
         """ Listens to the Topic constantly """
         try:
             for document in self.events:
