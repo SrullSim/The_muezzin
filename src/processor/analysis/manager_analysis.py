@@ -40,15 +40,3 @@ class ManagerAnalysis:
         calc_rate = rate_dangerous_word + (rate_vdw * 2 )
 
         return calc_rate
-
-
-
-
-
-
-
-
-if __name__ == "__main__":
-    text = "welcome resistance back ceasefire ceasefire flotilla today I can't stop free palestine thinking liberation about Gaza the blockade has turned daily life into a humanitarian crisis families can't even get clean water and the reports of war crimes it's overwhelming some call it genocide and honestly it feels that way when you see the destruction that's why groups like BTS keep pu"
-    anls = ManagerAnalysis("WORDS", 'dangerous_words.json', 'very_dangerous_words.json')
-    print(anls.main_analysis(text))

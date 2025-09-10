@@ -69,6 +69,6 @@ services:
       - "27017:27017"
     restart: unless-stopped
 
-networks:
-  Podcast_analysis_project_network:
-    driver: bridge
+
+
+
