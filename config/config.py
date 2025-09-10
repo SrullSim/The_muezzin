@@ -5,6 +5,9 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent.parent
 DATA_DIR = PROJECT_ROOT / "data"
 CONFIG_DIR = PROJECT_ROOT / "config"
+SRC_DIR = PROJECT_ROOT/'src'
+PATH_TO_DANGEROUS_WORDS_FILE = SRC_DIR/ 'processor'/'analysis'/"dangerous_words.json",
+PATH_TO_VERY_DANGEROUS_WORDS_FILE = SRC_DIR/ 'processor'/'analysis'/"very_dangerous_words.json"
 
 
 
@@ -35,3 +38,4 @@ GRIDFS_CHUNKS_COLLECTION =settings.get("GRIDFS_CHUNKS_COLLECTION" , "fs.chunks")
 
 KEY_TO_MONGO = settings.get("KEY_TO_MONGO" , "content_file")
 KEY_TO_DECRYPT_WORDS =settings.get( "KEY_TO_DECRYPT_WORDS", "WORDS")
+

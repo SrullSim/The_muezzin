@@ -3,11 +3,9 @@ import json
 from logger.logger import Logger
 import re
 from collections import Counter
-import string
 import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
-from nltk.stem import PorterStemmer
 
 
 
@@ -25,13 +23,13 @@ class AnalysisData:
          :return list of this words """
         try:
             with open(path_to_dangerous_words, 'r') as file:
-                json_data = json.load(file)
-                data = base64.b64decode(json_data[self.key_to_decrypt_words]).decode('utf-8')
-                list_of_words = data.lower().split(',')
+                json_words = json.load(file)
+                words = base64.b64decode(json_words[self.key_to_decrypt_words]).decode('utf-8')
+                list_of_words = words.lower().split(',')
                 self.logger.info("words loaded successfully")
                 return list_of_words
         except Exception as e:
-            self.logger.info("words loaded failed")
+            self.logger.info(f"words loaded failed: {e}")
             return None
 
 
