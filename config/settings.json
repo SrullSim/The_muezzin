@@ -16,7 +16,9 @@
   "COLLECTION_NAME" : "metadata",
   "COLLECTION_NAME_testing" : "fs.chunks",
   "KEY_TO_MONGO" : "content_file",
-  "GRIDFS_CHUNKS_COLLECTION" : "fs.chunks"
+  "GRIDFS_CHUNKS_COLLECTION" : "fs.chunks",
 
+
+  "KEY_TO_DECRYPT_WORDS":"WORDS"
 
 }

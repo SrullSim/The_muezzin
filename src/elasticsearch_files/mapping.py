@@ -1,3 +1,6 @@
+
+
+
 MAPPING ={
     "mapping":{
         "properties":{
@@ -13,10 +16,13 @@ MAPPING ={
 
             "file_modify_time":{"type": "date", "format": "yyyyMMddHHmmss"},
 
+            "is_bds": {"type": "boolean"},
+
+            "bds_threat_level": {"type":"keyword"},
+
+            "bds_percent": {"type":"float"},
+
             "content_file":{"type": "text"},
-
-            # "processed": {"type": "boolean"}
-
         }
     }
 }
