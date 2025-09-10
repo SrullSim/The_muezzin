@@ -1,4 +1,4 @@
-from analysis import AnalysisData
+from src.processor.analysis.analysis import AnalysisData
 from logger.logger import Logger
 
 
@@ -25,7 +25,7 @@ class ManagerAnalysis:
             return result
 
         except Exception as e:
-            self.logger.info("calculate rate failed")
+            self.logger.info(f"calculate rate failed{e}")
             return None
 
 
@@ -37,7 +37,7 @@ class ManagerAnalysis:
 
         rate_vdw = self.analyser.danger_rate(text_to_check, self.analyser.very_dangerous_words)
 
-        calc_rate = rate_dangerous_word + (rate_vdw*2)
+        calc_rate = rate_dangerous_word + (rate_vdw * 2 )
 
         return calc_rate
 
@@ -50,5 +50,5 @@ class ManagerAnalysis:
 
 if __name__ == "__main__":
     text = "welcome resistance back ceasefire ceasefire flotilla today I can't stop free palestine thinking liberation about Gaza the blockade has turned daily life into a humanitarian crisis families can't even get clean water and the reports of war crimes it's overwhelming some call it genocide and honestly it feels that way when you see the destruction that's why groups like BTS keep pu"
-    anls = ManagerAnalysis("WORDS", 'BDS_WORDS/dangerous_words.json','BDS_WORDS/very_dangerous_words.json')
-    anls.main_analysis(text)
+    anls = ManagerAnalysis("WORDS", 'dangerous_words.json', 'very_dangerous_words.json')
+    print(anls.main_analysis(text))
